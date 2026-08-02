@@ -14,6 +14,7 @@ A local-first AI assistant that uses the Gemini API while keeping durable, inspe
 - **Desktop GUI**: use a Tkinter interface for chat, memory search, manual notes, URL learning, consolidation, and reindexing.
 - **Deep reasoning mode**: optionally runs a draft, critique, and final-answer pass for harder requests.
 - **Memory graph export**: extracts `[[wiki links]]` into `graph.json` for inspecting relationships across notes.
+- **Memory management**: add and delete memories from the GUI or CLI, and download GUI chat transcripts as Markdown.
 
 ## Install
 
@@ -50,6 +51,13 @@ Search memory:
 
 ```bash
 obsidian-gemini-ai search "concise plans"
+```
+
+List or delete memories:
+
+```bash
+obsidian-gemini-ai list
+obsidian-gemini-ai delete notes/2026-08-02-user-preference.md
 ```
 
 Learn from a web page:
@@ -90,11 +98,11 @@ The GUI exposes the same local-first workflow as the CLI:
 
 1. Choose a vault directory or keep `memory_vault/`.
 2. Set a Gemini model, or keep the default.
-3. Type into the input bar and choose **Ask**, **Search**, **Learn URL**, **Remember**, **Consolidate**, or **Reindex**.
+3. Type into the input bar and choose **Ask**, **Search**, **Learn URL**, **Add Memory**, **Consolidate**, **Reindex**, or **Download Chat**.
 4. Enable **Reflect** before asking if you want each Gemini answer followed by a durable reflection note.
 5. Enable **Deep** when a prompt deserves a draft, self-critique, and final-answer pass.
 
-Gemini-powered GUI actions require `GEMINI_API_KEY`; local memory actions such as search, remember, and reindex do not.
+Gemini-powered GUI actions require `GEMINI_API_KEY`; local memory actions such as search, add memory, delete memory, download chat, and reindex do not. Select a row in the **Memories** panel and press **Delete Selected** to remove a note from disk and refresh the index.
 
 ## Memory layout
 

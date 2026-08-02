@@ -77,6 +77,22 @@ class ObsidianMemory:
         self._write_index(index)
         return path
 
+    def list_memories(self) -> list[dict]:
+        return sorted(self._read_index(), key=lambda item: (item.get("created") or "", item.get("title") or ""), reverse=True)
+
+    def delete_memory(self, relative_path: str) -> bool:
+        normalized = Path(relative_path)
+        if normalized.is_absolute() or ".." in normalized.parts:
+            raise ValueError("Memory path must be relative to the vault")
+        path = self.vault / normalized
+        if not path.exists() or not path.is_file():
+            return False
+        path.unlink()
+        index = [item for item in self._read_index() if item.get("path") != str(normalized)]
+        self._write_index(index)
+        self.export_graph()
+        return True
+
     def search(self, query: str, limit: int = 6) -> list[MemoryHit]:
         query_tokens = tokenize(query)
         if not query_tokens:

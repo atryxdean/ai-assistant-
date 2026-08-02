@@ -30,6 +30,11 @@ def build_parser() -> argparse.ArgumentParser:
     search = sub.add_parser("search", help="Search the memory vault")
     search.add_argument("query")
 
+    sub.add_parser("list", help="List memories in the vault")
+
+    delete = sub.add_parser("delete", help="Delete a memory by vault-relative path")
+    delete.add_argument("path")
+
     learn = sub.add_parser("learn-url", help="Learn from a URL and store a source note")
     learn.add_argument("url")
 
@@ -63,6 +68,14 @@ def main() -> None:
     if args.command == "search":
         for hit in ObsidianMemory(args.vault).search(args.query):
             print(f"{hit.score:.2f}\t{hit.path}\t{hit.title}")
+        return
+    if args.command == "list":
+        for item in ObsidianMemory(args.vault).list_memories():
+            print(f"{item.get('created') or 'unknown'}\t{item.get('path')}\t{item.get('title')}")
+        return
+    if args.command == "delete":
+        deleted = ObsidianMemory(args.vault).delete_memory(args.path)
+        print("Deleted" if deleted else "Not found")
         return
     if args.command == "reindex":
         count = ObsidianMemory(args.vault).rebuild_index()

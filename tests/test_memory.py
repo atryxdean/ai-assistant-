@@ -60,3 +60,21 @@ class MemoryTest(TestCase):
 
             self.assertIn("# Advanced retrieval", context)
             self.assertIn("Tags: retrieval", context)
+
+    def test_list_and_delete_memory(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            memory = ObsidianMemory(Path(temp_dir) / "vault")
+            path = memory.remember("Delete me", "temporary body", tags=["temp"])
+            relative_path = str(path.relative_to(memory.vault))
+
+            self.assertEqual(len(memory.list_memories()), 1)
+            self.assertTrue(memory.delete_memory(relative_path))
+            self.assertFalse(path.exists())
+            self.assertEqual(memory.list_memories(), [])
+
+    def test_delete_rejects_unsafe_path(self):
+        with tempfile.TemporaryDirectory() as temp_dir:
+            memory = ObsidianMemory(Path(temp_dir) / "vault")
+
+            with self.assertRaises(ValueError):
+                memory.delete_memory("../outside.md")
