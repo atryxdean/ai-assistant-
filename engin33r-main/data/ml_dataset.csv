@@ -1,0 +1,21 @@
+text,label
+"SELECT * FROM users WHERE email='" + email + "'",injection
+"cursor.execute('SELECT * FROM users WHERE id=' + user_id)",injection
+"os.system(user_input)",injection
+"document.write(userInput);",cross_site_scripting
+"element.innerHTML = userProvidedHtml;",cross_site_scripting
+"eval(userSuppliedCode)",cross_site_scripting
+"password = '123456'",broken_authentication
+"if password == 'admin': login()",broken_authentication
+"hardcoded_secret = 'AKIA...'",sensitive_data_exposure
+"private_key = '-----BEGIN PRIVATE KEY-----'",sensitive_data_exposure
+"if user.id != current_user.id: return data",broken_access_control
+"if not is_authorized(user): allow()",broken_access_control
+"open('/etc/passwd')",information_disclosure
+"print(secret_token)",information_disclosure
+"complex_calc = (a and b) or (c and d)",logic_error
+"result = compute(value) # TODO: validate inputs",logic_error
+"requests.get('http://' + host)",injection
+"xml = parse(user_input) # insecure",xml_external_entities
+"pickle.loads(user_data)",insecure_deserialization
+"dependency: vulnerable-lib==1.0.0",dependency_vulnerability

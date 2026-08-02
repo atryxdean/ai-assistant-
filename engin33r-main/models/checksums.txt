@@ -1,0 +1,5 @@
+# Example checksums file for models. Update after producing/downloading artifacts.
+# Format: <sha256sum>  <filename>
+
+# Example (replace with real checksums after generating models):
+# d41d8cd98f00b204e9800998ecf8427e  engin33r_model.pkl
